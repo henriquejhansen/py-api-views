@@ -1,10 +1,13 @@
-from django.urls import path
+from django.urls import path, include
+from rest_framework.routers import DefaultRouter
+from .views import GenreAPIView, ActorGenericAPIView, CinemaHallViewSet, MovieViewSet
 
-from cinema.views import movie_list, movie_detail
+router = DefaultRouter()
+router.register("cinema_halls", CinemaHallViewSet, basename="cinema_hall")
+router.register("movies", MovieViewSet)
 
 urlpatterns = [
-    path("movies/", movie_list, name="movie-list"),
-    path("movies/<int:pk>/", movie_detail, name="movie-detail"),
+    path("cinema/genres/", GenreAPIView.as_view()),
+    path("cinema/actors/", ActorGenericAPIView.as_view()),
+    path("cinema/", include(router.urls)),
 ]
-
-app_name = "cinema"
