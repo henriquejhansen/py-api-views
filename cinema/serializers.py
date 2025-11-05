@@ -1,5 +1,10 @@
 from rest_framework import serializers
-from .models import Genre, Actor, CinemaHall, Movie
+from .models import (
+    Genre,
+    Actor,
+    CinemaHall,
+    Movie,
+)
 
 class GenreSerializer(serializers.ModelSerializer):
     class Meta:
