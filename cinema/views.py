@@ -4,7 +4,12 @@ from rest_framework.viewsets import GenericViewSet
 from rest_framework.response import Response
 from rest_framework import status, mixins
 from .models import Genre, Actor, CinemaHall, Movie
-from .serializers import GenreSerializer, ActorSerializer, CinemaHallSerializer, MovieSerializer
+from .serializers import (
+    GenreSerializer,
+    ActorSerializer,
+    CinemaHallSerializer,
+    MovieSerializer,
+)
 
 
 class GenreAPIView(APIView):
@@ -17,7 +22,9 @@ class GenreAPIView(APIView):
         serializer = GenreSerializer(data=request.data)
         if serializer.is_valid():
             serializer.save()
-            return Response(serializer.data, status=status.HTTP_201_CREATED)
+            return Response(
+                serializer.data, status=status.HTTP_201_CREATED
+            )
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
@@ -49,7 +56,9 @@ class GenreDetailAPIView(APIView):
         genre = self.get_object(pk)
         if not genre:
             return Response(status=status.HTTP_404_NOT_FOUND)
-        serializer = GenreSerializer(genre, data=request.data, partial=True)
+        serializer = GenreSerializer(
+            genre, data=request.data, partial=True
+        )
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data)
@@ -63,7 +72,11 @@ class GenreDetailAPIView(APIView):
         return Response(status=status.HTTP_204_NO_CONTENT)
 
 
-class ActorAPIView(GenericAPIView, mixins.ListModelMixin, mixins.CreateModelMixin):
+class ActorAPIView(
+    GenericAPIView,
+    mixins.ListModelMixin,
+    mixins.CreateModelMixin,
+):
     queryset = Actor.objects.all()
     serializer_class = ActorSerializer
 
@@ -74,8 +87,12 @@ class ActorAPIView(GenericAPIView, mixins.ListModelMixin, mixins.CreateModelMixi
         return self.create(request)
 
 
-class ActorDetailAPIView(GenericAPIView, mixins.RetrieveModelMixin,
-                         mixins.UpdateModelMixin, mixins.DestroyModelMixin):
+class ActorDetailAPIView(
+    GenericAPIView,
+    mixins.RetrieveModelMixin,
+    mixins.UpdateModelMixin,
+    mixins.DestroyModelMixin,
+):
     queryset = Actor.objects.all()
     serializer_class = ActorSerializer
 
@@ -92,13 +109,25 @@ class ActorDetailAPIView(GenericAPIView, mixins.RetrieveModelMixin,
         return self.destroy(request, pk=pk)
 
 
-class CinemaHallViewSet(GenericViewSet, mixins.ListModelMixin, mixins.CreateModelMixin,
-                        mixins.RetrieveModelMixin, mixins.UpdateModelMixin, mixins.DestroyModelMixin):
+class CinemaHallViewSet(
+    GenericViewSet,
+    mixins.ListModelMixin,
+    mixins.CreateModelMixin,
+    mixins.RetrieveModelMixin,
+    mixins.UpdateModelMixin,
+    mixins.DestroyModelMixin,
+):
     queryset = CinemaHall.objects.all()
     serializer_class = CinemaHallSerializer
 
 
-class MovieViewSet(GenericViewSet, mixins.ListModelMixin, mixins.CreateModelMixin,
-                   mixins.RetrieveModelMixin, mixins.UpdateModelMixin, mixins.DestroyModelMixin):
+class MovieViewSet(
+    GenericViewSet,
+    mixins.ListModelMixin,
+    mixins.CreateModelMixin,
+    mixins.RetrieveModelMixin,
+    mixins.UpdateModelMixin,
+    mixins.DestroyModelMixin,
+):
     queryset = Movie.objects.all()
     serializer_class = MovieSerializer
