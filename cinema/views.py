@@ -1,33 +1,19 @@
-from rest_framework.viewsets import ModelViewSet
-from .models import (
-    Genre,
-    Actor,
-    CinemaHall,
-    Movie,
-)
-from .serializers import (
-    GenreSerializer,
-    ActorSerializer,
-    CinemaHallSerializer,
-    MovieSerializer,
-)
+from rest_framework.generics import ListCreateAPIView, RetrieveUpdateDestroyAPIView
+from .models import Genre, Actor
+from .serializers import GenreSerializer, ActorSerializer
 
-
-class GenreViewSet(ModelViewSet):
+class GenreList(ListCreateAPIView):
     queryset = Genre.objects.all()
     serializer_class = GenreSerializer
 
+class GenreDetail(RetrieveUpdateDestroyAPIView):
+    queryset = Genre.objects.all()
+    serializer_class = GenreSerializer
 
-class ActorViewSet(ModelViewSet):
+class ActorList(ListCreateAPIView):
     queryset = Actor.objects.all()
     serializer_class = ActorSerializer
 
-
-class CinemaHallViewSet(ModelViewSet):
-    queryset = CinemaHall.objects.all()
-    serializer_class = CinemaHallSerializer
-
-
-class MovieViewSet(ModelViewSet):
-    queryset = Movie.objects.all()
-    serializer_class = MovieSerializer
+class ActorDetail(RetrieveUpdateDestroyAPIView):
+    queryset = Actor.objects.all()
+    serializer_class = ActorSerializer
